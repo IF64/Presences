@@ -11,25 +11,25 @@ browsingTimestamp = Math.floor(Date.now() / 1000);
 
 let title: string, seasonEpisode: string, liveTitle: string;
 
+const enum Logos {
+Paramount = "https://i.imgur.com/VWrl85V.jpg",
+CBS = "https://i.imgur.com/BfxpVej.png",
+BET = "https://i.imgur.com/SBl99Dz.png",
+ComedyCentral = "https://i.imgur.com/936hLEE.png",
+MTV = "https://i.imgur.com/uCpqd3d.png",
+Nickelodeon = "https://i.imgur.com/SwkpkrM.png",
+Smithsonian = "https://i.imgur.com/1TfaVpT.png"
+};
+
 function pathIncludes(path: string, str: string) {
 return path.includes(str);
 }
-
-const enum Logos {
-	Paramount = "https://i.imgur.com/VWrl85V.jpg",
-	CBS = "https://i.imgur.com/BfxpVej.png",
-	BET = "https://i.imgur.com/SBl99Dz.png",
-	ComedyCentral = "https://i.imgur.com/936hLEE.png",
-	MTV = "https://i.imgur.com/uCpqd3d.png",
-	Nickelodeon = "https://i.imgur.com/SwkpkrM.png",
-	Smithsonian = "https://i.imgur.com/1TfaVpT.png"
-};
 
 presence.on("UpdateData", async () => {
 let video: HTMLVideoElement = null;
 const vidArea = document.querySelector(".video__player-area"),
 	presenceData: PresenceData = {
-		largeImageKey: "https://i.imgur.com/VWrl85V.jpg",
+		largeImageKey: Logos.Paramount,
 		startTimestamp: browsingTimestamp,
 	},
 	{ pathname: path } = document.location;
@@ -67,7 +67,7 @@ switch (true) {
 				? (await strings).pause
 				: (await strings).play;
 			presenceData.largeImageKey =
-				data.image || "https://i.imgur.com/VWrl85V.jpg";
+				data.image || Logos.Paramount;
 
 			[presenceData.startTimestamp, presenceData.endTimestamp] =
 				presence.getTimestampsfromMedia(video);
@@ -148,7 +148,7 @@ switch (true) {
 		} else if (path.includes("/bet/")) {
 			presenceData.details = "Browsing Brand:";
 			presenceData.state = "BET";
-			presenceData.largeImageKey = Logos.CBS;
+			presenceData.largeImageKey = Logos.BET;
 		} else if (path.includes("/comedy-central/")) {
 			presenceData.details = "Browsing Brand:";
 			presenceData.state = "Comedy Central";
